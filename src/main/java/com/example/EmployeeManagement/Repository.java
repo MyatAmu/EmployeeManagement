@@ -24,12 +24,18 @@ public class Repository {
     public Employee getByID(int id){
         String sql = "SELECT * FROM employees WHERE id = ?";
         List<Employee> employees = template.query(sql, new EmployeeMapper(), id);
-        return employees.size() > 0 ? employees.get(0): null;
+        return employees.stream().findFirst().orElse(null);
     }
 
     public void deleteEmployee(int id){
         String sql = "DELETE FROM employees where id = ?";
         template.update(sql, id);
+    }
+
+    public Employee createEmployee(Employee employee){
+        String sql = "INSERT INTO employees (id, name, designation, department) values(?, ?, ?, ?)";
+        template.update(sql, employee.getId(), employee.getName(), employee.getDesignation(), employee.getDepartment());
+        return employee;
     }
 
     private class EmployeeMapper implements RowMapper<Employee>{

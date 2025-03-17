@@ -21,4 +21,8 @@ public class Service {
     public Employee byID(int id){
         return repositroy.getByID(id);
     }
+
+    public Employee create(Employee employee){
+        return repositroy.createEmployee(employee);
+    }
 }

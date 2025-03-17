@@ -1,10 +1,8 @@
 package com.example.EmployeeManagement;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,8 +21,14 @@ public class Controller {
         return service.byID(id);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteEmployeeByID(@PathVariable int id){
         service.delete(id);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<Employee> createEmp(@RequestBody Employee employee){
+        Employee createdEmployee = service.create(employee);
+        return ResponseEntity.ok(createdEmployee);
     }
 }
